@@ -1,0 +1,9 @@
+{
+	"name": "hangman",
+	"authors": [
+		"akrastev"
+	],
+	"description": "The Hangman Game.",
+	"copyright": "Copyright © 2017, akrastev",
+	"license": "Unilcense"
+}

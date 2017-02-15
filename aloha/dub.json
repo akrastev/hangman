@@ -1,0 +1,9 @@
+{
+	"name": "aloha",
+	"authors": [
+		"akrastev"
+	],
+	"description": "A minimal D application.",
+	"copyright": "Copyright © 2017, akrastev",
+	"license": "proprietary"
+}
