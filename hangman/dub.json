@@ -1,9 +1,10 @@
 {
 	"name": "hangman",
 	"authors": [
-		"akrastev"
+		"akrastev",
+		"lharuil",
 	],
 	"description": "The Hangman Game.",
 	"copyright": "Copyright © 2017, akrastev",
-	"license": "Unilcense"
+	"license": "BSD 2-clause"
 }
