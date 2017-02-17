@@ -1,10 +1,6 @@
 The Hangman game
 
-A simple 3-tier app.
+It's easy. You must guess a (semi-)random word otherwise you get hanged!
+If you enter more than one letter for a guess, we'll accept only the first one.
 
-The initial version shows a random of hard-coded 4 words.
-This may be Version 1 of the game.
-
-Pedagogical steps:
-Step 0: Hello, world! Development environment.
-Step 1: Arrays, indexing and random numbers.
+The easiest way to build and run is by using Visual Studio Code.
