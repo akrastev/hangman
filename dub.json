@@ -1,10 +1,12 @@
 {
 	"name": "hangman",
 	"authors": [
-		"akrastev",
-		"lharuil",
+		"akrastev"
 	],
 	"description": "The Hangman Game.",
 	"copyright": "Copyright © 2017, akrastev",
-	"license": "BSD 2-clause"
+	"license": "BSD 2-clause",
+	"dependencies": {
+		"vibe-d": "~>0.8.0-beta.3"
+    }
 }

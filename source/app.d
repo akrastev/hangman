@@ -1,6 +1,7 @@
 import std.random;
 import std.range;
 import std.stdio;
+import vibe.d;
 
 /// This is our DB layer.
 string[] words = [ "how", "now", "brown", "cow" ];
