@@ -27,7 +27,7 @@ string getRandomWord()
 
 
 /// Extract the generating of a char set.
-@safe char[] getCharsInWord(string randomWord)
+@safe char[] getCharsInWord(ref const string randomWord)
 {
 	char[] charsInRandomWord;
 	for (int i = 0; i < randomWord.length; ++i) {
@@ -55,7 +55,7 @@ string getRandomWord()
 
 	
 /// The hanged man. A picture gallery.
-string[] hangedMan = [
+immutable string[] hangedMan = [
 	"(none)",
 
 	"|\n" ~
@@ -146,7 +146,7 @@ string[] hangedMan = [
 
 
 /// Extract the scene rendering.
-void render(string randomWord, int errors, const char[] guessed, const char[] wrong)
+void render(ref const string randomWord, int errors, const char[] guessed, const char[] wrong)
 {
 	wait(spawnShell("cls"));
 	writeln(hangedMan[errors]);
@@ -176,7 +176,7 @@ char readGuess()
 
 
 /// Extract the correctness test.
-bool isCorrectGuess(char ch, string randomWord)
+bool isCorrectGuess(char ch, ref const string randomWord)
 {
 	bool found = false;
 	for (int i = 0; i < randomWord.length; ++i) {
@@ -191,7 +191,7 @@ bool isCorrectGuess(char ch, string randomWord)
 
 
 /// The whole game in one function.
-bool play(string randomWord)
+bool play(ref const string randomWord)
 {
 	const char[] charsInRandomWord = getCharsInWord(randomWord);
 
