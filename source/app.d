@@ -53,99 +53,116 @@ string getRandomWord()
 	assert("now" == getCharsInWord("nownnn"));
 }
 
-/// The whole game in one function.
-bool play(string randomWord) {
 	
-	/// The hanged man. A picture gallery.
-	string[] hangedMan = [
-		"(none)",
+/// The hanged man. A picture gallery.
+string[] hangedMan = [
+	"(none)",
 
-		"|\n" ~
-		"|\n" ~
-		"|\n",
+	"|\n" ~
+	"|\n" ~
+	"|\n",
 
-		"|- - |\n" ~
-		"|\n" ~
-		"|\n",
+	"|- - |\n" ~
+	"|\n" ~
+	"|\n",
 
-		"|- - |\n" ~
-		"|    |\n" ~
-		"|\n",
+	"|- - |\n" ~
+	"|    |\n" ~
+	"|\n",
 
-		"|- - |\n" ~
-		"|    |\n" ~
-		"|   / \\\n" ~
-		"|   \\ /\n",
+	"|- - |\n" ~
+	"|    |\n" ~
+	"|   / \\\n" ~
+	"|   \\ /\n",
 
-		"|- - |\n" ~
-		"|    |\n" ~
-		"|   / \\\n" ~
-		"|   \\ /\n" ~
-		"|    |\n" ~
-		"|\n",
+	"|- - |\n" ~
+	"|    |\n" ~
+	"|   / \\\n" ~
+	"|   \\ /\n" ~
+	"|    |\n" ~
+	"|\n",
 
-		"|- - |\n" ~
-		"|    |\n" ~
-		"|   / \\\n" ~
-		"|   \\ /\n" ~
-		"|    |\n" ~
-		"|    |\n" ~
-		"|    |\n" ~
-		"|   /\n" ~
-		"|  /\n" ~
-		"|\n" ~
-		"|\n",
+	"|- - |\n" ~
+	"|    |\n" ~
+	"|   / \\\n" ~
+	"|   \\ /\n" ~
+	"|    |\n" ~
+	"|    |\n" ~
+	"|    |\n" ~
+	"|   /\n" ~
+	"|  /\n" ~
+	"|\n" ~
+	"|\n",
 
-		"|- - |\n" ~
-		"|    |\n" ~
-		"|   / \\\n" ~
-		"|   \\ /\n" ~
-		"|    |\n" ~
-		"|    |\n" ~
-		"|    |\n" ~
-		"|   / \\\n" ~
-		"|  /   \\\n" ~
-		"|\n" ~
-		"|\n",
+	"|- - |\n" ~
+	"|    |\n" ~
+	"|   / \\\n" ~
+	"|   \\ /\n" ~
+	"|    |\n" ~
+	"|    |\n" ~
+	"|    |\n" ~
+	"|   / \\\n" ~
+	"|  /   \\\n" ~
+	"|\n" ~
+	"|\n",
 
-		"|- - |\n" ~
-		"|    |\n" ~
-		"|   / \\\n" ~
-		"|   \\ / /\n" ~
-		"|    | / \n" ~
-		"|    |\n" ~
-		"|    |\n" ~
-		"|   / \\\n" ~
-		"|  /   \\\n" ~
-		"|\n" ~
-		"|\n",
+	"|- - |\n" ~
+	"|    |\n" ~
+	"|   / \\\n" ~
+	"|   \\ / /\n" ~
+	"|    | / \n" ~
+	"|    |\n" ~
+	"|    |\n" ~
+	"|   / \\\n" ~
+	"|  /   \\\n" ~
+	"|\n" ~
+	"|\n",
 
-		"|- - |\n" ~
-		"|    |\n" ~
-		"|   / \\\n" ~
-		"| \\ \\ / /\n" ~
-		"|  \\ | / \n" ~
-		"|    |\n" ~
-		"|    |\n" ~
-		"|   / \\\n" ~
-		"|  /   \\\n" ~
-		"|\n" ~
-		"|\n",
+	"|- - |\n" ~
+	"|    |\n" ~
+	"|   / \\\n" ~
+	"| \\ \\ / /\n" ~
+	"|  \\ | / \n" ~
+	"|    |\n" ~
+	"|    |\n" ~
+	"|   / \\\n" ~
+	"|  /   \\\n" ~
+	"|\n" ~
+	"|\n",
 
 
-		"|- - |\n" ~
-		"|   #|#\n" ~
-		"| # / \\ #\n" ~
-		"| \\#\\ /#/\n" ~
-		"|  \\###/ \n" ~
-		"|    |\n" ~
-		"|    |\n" ~
-		"|   / \\\n" ~
-		"|  /   \\\n" ~
-		"|\n" ~
-		"|\n"
-	];
+	"|- - |\n" ~
+	"|   #|#\n" ~
+	"| # / \\ #\n" ~
+	"| \\#\\ /#/\n" ~
+	"|  \\###/ \n" ~
+	"|    |\n" ~
+	"|    |\n" ~
+	"|   / \\\n" ~
+	"|  /   \\\n" ~
+	"|\n" ~
+	"|\n"
+];
 
+
+/// Extract the scene rendering.
+void render(string randomWord, int errors, const char[] guessed, const char[] wrong)
+{
+	wait(spawnShell("cls"));
+	writeln(hangedMan[errors]);
+	auto mask = tr(randomWord, guessed, ['_'], "c");
+	write("The guess so far:   ");
+	for (int i = 0; i < mask.length; ++i) {
+		write(mask[i], " ");
+	}
+	writeln("   (", randomWord.length, " letters)");
+	writeln("Wrong guesses: ", wrong);
+}
+
+
+/// The whole game in one function.
+bool play(string randomWord)
+{
 	const char[] charsInRandomWord = getCharsInWord(randomWord);
 
 	auto errors = 0;
@@ -153,15 +170,7 @@ bool play(string randomWord) {
 	char[] wrong;
 
 	do {
-		wait(spawnShell("cls"));
-		writeln("Hanging:\n", hangedMan[errors]);
-		auto mask = tr(randomWord, guessed, ['_'], "c");
-		write("The guess so far:   ");
-		for (int i = 0; i < mask.length; ++i) {
-			write(mask[i], " ");
-		}
-		writeln("   (", randomWord.length, " letters)");
-		writeln("Wrong guesses: ", wrong);
+		render(randomWord, errors, guessed, wrong);
 
 		char[] guess;
 		write("Guess a letter: ");
