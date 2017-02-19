@@ -160,6 +160,36 @@ void render(string randomWord, int errors, const char[] guessed, const char[] wr
 }
 
 
+/// Extract the user input functionallity.
+char readGuess()
+{
+	char[] guess;
+	write("Guess a letter: ");
+	readln(guess);
+
+	assert(guess.length > 0);
+	const char ch = guess[0];
+	writeln("Got it. Guess: ", ch);
+
+	return ch;
+}
+
+
+/// Extract the correctness test.
+bool isCorrectGuess(char ch, string randomWord)
+{
+	bool found = false;
+	for (int i = 0; i < randomWord.length; ++i) {
+		if (randomWord[i] == ch) {
+			found = true;
+			break;
+		}
+	}
+
+	return found;
+}
+
+
 /// The whole game in one function.
 bool play(string randomWord)
 {
@@ -171,28 +201,13 @@ bool play(string randomWord)
 
 	do {
 		render(randomWord, errors, guessed, wrong);
+		char ch = readGuess();
 
-		char[] guess;
-		write("Guess a letter: ");
-		readln(guess);
-
-		assert(guess.length > 0);
-		const char ch = guess[0];
-		writeln("Got it. Guess: ", ch);
-
-		bool found = false;
-		for (int i = 0; i < randomWord.length; ++i) {
-			if (randomWord[i] == ch) {
-				found = true;
-				break;
-			}
-		}
-
-		if (!found) {
+		if (isCorrectGuess(ch, randomWord)) {
+			guessed ~= [ch];
+		} else {
 			++errors;
 			wrong ~= [ch];
-		} else {
-			guessed ~= [ch];
 		}
 	} while (errors < hangedMan.length && guessed.length < charsInRandomWord.length);
 
