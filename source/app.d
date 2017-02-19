@@ -8,7 +8,7 @@ import vibe.d;
 import vibe.http.client;
 
 
-/// Makes sure we have a random English word.
+/// Extract getting the random word.
 string getRandomWord()
 {
 	string randomWord = "I hope something random comes through HTTP.";
@@ -23,6 +23,34 @@ string getRandomWord()
 	);
 	
 	return randomWord;
+}
+
+
+/// Extract the generating of a char set.
+@safe char[] getCharsInWord(string randomWord)
+{
+	char[] charsInRandomWord;
+	for (int i = 0; i < randomWord.length; ++i) {
+		bool found = false;
+		for (int j = 0; j < charsInRandomWord.length; ++j) {
+			if (charsInRandomWord[j] == randomWord[i]) {
+				found = true;
+				break;
+			}
+		}
+		if (!found) {
+			charsInRandomWord ~= [randomWord[i]];
+		}
+	}
+
+	return charsInRandomWord;
+}
+
+/// Simple test of the convert-to-set function.
+@safe unittest
+{
+	assert("how" == getCharsInWord("how"));
+	assert("now" == getCharsInWord("nownnn"));
 }
 
 /// The whole game in one function.
@@ -118,19 +146,7 @@ void play(string randomWord) {
 		"|\n"
 	];
 
-	char[] charsInRandomWord;
-	for (int i = 0; i < randomWord.length; ++i) {
-		bool found = false;
-		for (int j = 0; j < charsInRandomWord.length; ++j) {
-			if (charsInRandomWord[j] == randomWord[i]) {
-				found = true;
-				break;
-			}
-		}
-		if (!found) {
-			charsInRandomWord ~= [randomWord[i]];
-		}
-	}
+	const char[] charsInRandomWord = getCharsInWord(randomWord);
 
 	auto errors = 0;
 	char[] guessed;
