@@ -8,8 +8,25 @@ import vibe.d;
 import vibe.http.client;
 
 
+/// Makes sure we have a random English word.
+string getRandomWord()
+{
+	string randomWord = "I hope something random comes through HTTP.";
+
+	requestHTTP("http://www.setgetgo.com/randomword/get.php",
+		(scope req) {
+			req.method = HTTPMethod.GET;
+		},
+		(scope res) {
+			randomWord = res.bodyReader.readAllUTF8();
+		}
+	);
+	
+	return randomWord;
+}
+
 /// The whole game in one function.
-void play() {
+void play(string randomWord) {
 	
 	/// The hanged man. A picture gallery.
 	string[] hangedMan = [
@@ -101,17 +118,6 @@ void play() {
 		"|\n"
 	];
 
-	string randomWord = "I hope something random comes through HTTP.";
-
-	requestHTTP("http://www.setgetgo.com/randomword/get.php",
-		(scope req) {
-			req.method = HTTPMethod.GET;
-		},
-		(scope res) {
-			randomWord = res.bodyReader.readAllUTF8();
-		}
-	);
-
 	char[] charsInRandomWord;
 	for (int i = 0; i < randomWord.length; ++i) {
 		bool found = false;
@@ -176,5 +182,5 @@ void play() {
 /// The game itself.
 void main()
 {
-	play();
+	play(getRandomWord());
 }
