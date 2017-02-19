@@ -54,7 +54,7 @@ string getRandomWord()
 }
 
 /// The whole game in one function.
-void play(string randomWord) {
+bool play(string randomWord) {
 	
 	/// The hanged man. A picture gallery.
 	string[] hangedMan = [
@@ -187,16 +187,18 @@ void play(string randomWord) {
 		}
 	} while (errors < hangedMan.length && guessed.length < charsInRandomWord.length);
 
-	if (guessed.length == charsInRandomWord.length) {
-		writeln("YOU ROCK!");
-	} else {
-		writeln("YOU WERE HANGED");
-	}
-	writeln("The word was: ", randomWord);
+	return guessed.length == charsInRandomWord.length;
+
 }
 
 /// The game itself.
 void main()
 {
-	play(getRandomWord());
+	immutable string randomWord = getRandomWord();
+	if (play(randomWord)) {
+		writeln("YOU ROCK!");
+	} else {
+		writeln("YOU WERE HANGED");
+	}
+	writeln("The word was: ", randomWord);
 }
