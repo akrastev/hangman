@@ -156,6 +156,7 @@ void render(ref const string randomWord, int errors, const char[] guessed, const
 		write(mask[i], " ");
 	}
 	writeln("   (", randomWord.length, " letters)");
+	writeln("Right guesses: ", guessed);
 	writeln("Wrong guesses: ", wrong);
 }
 
