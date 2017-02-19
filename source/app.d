@@ -162,15 +162,44 @@ void render(ref const string randomWord, int errors, const char[] guessed, const
 
 
 /// Extract the user input functionallity.
-char readGuess()
+char readGuess(ref const char[] guessed, ref const char[] wrong)
 {
+	bool uniqueGuess;
 	char[] guess;
-	write("Guess a letter: ");
-	readln(guess);
+	char ch;
 
-	assert(guess.length > 0);
-	const char ch = guess[0];
-	writeln("Got it. Guess: ", ch);
+	do {
+		write("Guess a letter: ");
+		readln(guess);
+
+		assert(guess.length > 0);
+
+		ch = guess[0];
+
+		writeln("Got it. Guess: ", ch);
+
+		uniqueGuess = true; // assume uniqueness
+
+		// try in guessed
+		for (int i = 0; i < guessed.length; ++i) {
+			if (guessed[i] == ch) {
+				uniqueGuess = false;
+				writeln("You already tried that and it was right.");
+				break;
+			}
+		}
+
+		// try in wrong
+		if (uniqueGuess) {
+			for (int i = 0; i < wrong.length; ++i) {
+				if (wrong[i] == ch) {
+					uniqueGuess = false;
+					writeln("You already tried that and it was wrong.");
+					break;
+				}
+			}
+		}
+	} while (!uniqueGuess);
 
 	return ch;
 }
@@ -202,7 +231,7 @@ bool play(ref const string randomWord)
 
 	do {
 		render(randomWord, errors, guessed, wrong);
-		char ch = readGuess();
+		char ch = readGuess(guessed, wrong);
 
 		if (isCorrectGuess(ch, randomWord)) {
 			guessed ~= [ch];
