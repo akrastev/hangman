@@ -241,8 +241,14 @@ bool play(ref const string randomWord)
 		}
 	} while (errors < hangedMan.length && guessed.length < charsInRandomWord.length);
 
-	return guessed.length == charsInRandomWord.length;
+	const bool isWinning = guessed.length == charsInRandomWord.length;
 
+	if (isWinning) {
+		// Fix #4. The last render will show the guessed word.
+		render(randomWord, errors, guessed, wrong);
+	}
+
+	return isWinning;
 }
 
 /// The game itself.
@@ -256,6 +262,6 @@ void main()
 		writeln("YOU ROCK!");
 	} else {
 		writeln("YOU WERE HANGED");
+		writeln("The word was: ", randomWord);
 	}
-	writeln("The word was: ", randomWord);
 }
