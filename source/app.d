@@ -158,7 +158,9 @@ void render(ref const string randomWord, int errors, const char[] guessed, const
 	}
 	writeln("   (", randomWord.length, " letters)\n");
 	writeln("Right guesses: ", guessed);
-	writeln("Wrong guesses: ", wrong);
+	writeln("Wrong guesses: ", wrong,
+	        "  (", hangedMan.length - wrong.length - 1, "/",
+	        hangedMan.length - 1, " left)");
 }
 
 
