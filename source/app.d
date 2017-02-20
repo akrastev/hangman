@@ -4,6 +4,7 @@ import std.process;
 import std.random;
 import std.range;
 import std.stdio;
+import std.uni;
 import vibe.d;
 import vibe.http.client;
 
@@ -178,10 +179,12 @@ char readGuess(ref const char[] guessed, ref const char[] wrong)
 		assert(guess.length > 0);
 
 		ch = guess[0];
-
-		writeln("Got it. Guess: ", ch);
-
 		uniqueGuess = true; // assume uniqueness
+
+		if (!ch.isAlpha || !ch.isLower) {
+			writeln("Your guess must be a lower-case letter.");
+			continue;
+		}
 
 		// try in guessed
 		for (int i = 0; i < guessed.length; ++i) {
@@ -202,7 +205,7 @@ char readGuess(ref const char[] guessed, ref const char[] wrong)
 				}
 			}
 		}
-	} while (!uniqueGuess);
+	} while (!uniqueGuess || !ch.isLower || !ch.isAlpha);
 
 	return ch;
 }
