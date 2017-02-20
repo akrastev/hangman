@@ -1,5 +1,6 @@
 language: d
 
 script:
+  - dub upgrade
   - dub build
   - dub test
