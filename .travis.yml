@@ -4,3 +4,6 @@ script:
   - dub upgrade
   - dub build
   - dub test
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
