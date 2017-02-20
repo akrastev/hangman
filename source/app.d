@@ -22,7 +22,7 @@ string getRandomWord()
 		}
 	);
 	
-	return randomWord;
+	return randomWord.toLower;
 }
 
 
@@ -56,7 +56,7 @@ string getRandomWord()
 	
 /// The hanged man. A picture gallery.
 immutable string[] hangedMan = [
-	"(none)",
+	"(none)\n",
 
 	"|\n" ~
 	"|\n" ~
@@ -73,7 +73,8 @@ immutable string[] hangedMan = [
 	"|- - |\n" ~
 	"|    |\n" ~
 	"|   / \\\n" ~
-	"|   \\ /\n",
+	"|   \\ /\n" ~
+	"|\n",
 
 	"|- - |\n" ~
 	"|    |\n" ~
@@ -151,11 +152,11 @@ void render(ref const string randomWord, int errors, const char[] guessed, const
 	wait(spawnShell("cls"));
 	writeln(hangedMan[errors]);
 	auto mask = tr(randomWord, guessed, ['_'], "c");
-	write("The guess so far:   ");
+	write("   ");
 	for (int i = 0; i < mask.length; ++i) {
 		write(mask[i], " ");
 	}
-	writeln("   (", randomWord.length, " letters)");
+	writeln("   (", randomWord.length, " letters)\n");
 	writeln("Right guesses: ", guessed);
 	writeln("Wrong guesses: ", wrong);
 }
