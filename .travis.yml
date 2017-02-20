@@ -2,7 +2,7 @@ language: d
 
 script:
   - dub upgrade
-  - dub test --coverage --compiler=${DC}
+  - dub test --coverage --compiler=${DC}
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
