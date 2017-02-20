@@ -2,7 +2,10 @@ language: d
 
 script:
   - dub upgrade
-  - dub test --coverage --compiler=${DC}
+#  Coverage disabled because we are hitting this bug:
+#  https://github.com/rejectedsoftware/vibe.d/issues/767
+#  - dub test --coverage --compiler=${DC}
+  - dub test --compiler=${DC}
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
