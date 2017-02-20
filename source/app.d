@@ -27,7 +27,7 @@ string getRandomWord()
 
 
 /// Extract the generating of a char set.
-@safe char[] getCharsInWord(ref const string randomWord)
+@safe char[] getCharsInWord(string randomWord)
 {
 	char[] charsInRandomWord;
 	for (int i = 0; i < randomWord.length; ++i) {
@@ -246,6 +246,9 @@ bool play(ref const string randomWord)
 }
 
 /// The game itself.
+version(unittest)
+void main() {}
+else
 void main()
 {
 	immutable string randomWord = getRandomWord();
