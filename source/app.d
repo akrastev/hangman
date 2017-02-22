@@ -57,7 +57,7 @@ string getRandomWord()
 	
 /// The hanged man. A picture gallery.
 immutable string[] hangedMan = [
-	"(none)\n",
+	"\n",
 
 	"|\n" ~
 	"|\n" ~
