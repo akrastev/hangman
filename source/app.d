@@ -1,31 +1,11 @@
+import db;
 import std.algorithm.iteration;
 import std.algorithm.sorting;
-import std.process;
 import std.random;
 import std.range;
 import std.stdio;
 import std.uni;
-import vibe.d;
-import vibe.http.client;
-
-
-/// Extract getting the random word.
-string getRandomWord()
-{
-	string randomWord = "I hope something random comes through HTTP.";
-
-	requestHTTP("http://www.setgetgo.com/randomword/get.php",
-		(scope req) {
-			req.method = HTTPMethod.GET;
-		},
-		(scope res) {
-			randomWord = res.bodyReader.readAllUTF8();
-		}
-	);
-	
-	return randomWord.toLower;
-}
-
+import ui;
 
 /// Extract the generating of a char set.
 @safe char[] getCharsInWord(string randomWord)
@@ -54,162 +34,6 @@ string getRandomWord()
 	assert("now" == getCharsInWord("nownnn"));
 }
 
-	
-/// The hanged man. A picture gallery.
-immutable string[] hangedMan = [
-	"\n",
-
-	"|\n" ~
-	"|\n" ~
-	"|\n",
-
-	"|- - |\n" ~
-	"|\n" ~
-	"|\n",
-
-	"|- - |\n" ~
-	"|    |\n" ~
-	"|\n",
-
-	"|- - |\n" ~
-	"|    |\n" ~
-	"|   / \\\n" ~
-	"|   \\ /\n" ~
-	"|\n",
-
-	"|- - |\n" ~
-	"|    |\n" ~
-	"|   / \\\n" ~
-	"|   \\ /\n" ~
-	"|    |\n" ~
-	"|\n",
-
-	"|- - |\n" ~
-	"|    |\n" ~
-	"|   / \\\n" ~
-	"|   \\ /\n" ~
-	"|    |\n" ~
-	"|    |\n" ~
-	"|    |\n" ~
-	"|   /\n" ~
-	"|  /\n" ~
-	"|\n" ~
-	"|\n",
-
-	"|- - |\n" ~
-	"|    |\n" ~
-	"|   / \\\n" ~
-	"|   \\ /\n" ~
-	"|    |\n" ~
-	"|    |\n" ~
-	"|    |\n" ~
-	"|   / \\\n" ~
-	"|  /   \\\n" ~
-	"|\n" ~
-	"|\n",
-
-	"|- - |\n" ~
-	"|    |\n" ~
-	"|   / \\\n" ~
-	"|   \\ / /\n" ~
-	"|    | / \n" ~
-	"|    |\n" ~
-	"|    |\n" ~
-	"|   / \\\n" ~
-	"|  /   \\\n" ~
-	"|\n" ~
-	"|\n",
-
-	"|- - |\n" ~
-	"|    |\n" ~
-	"|   / \\\n" ~
-	"| \\ \\ / /\n" ~
-	"|  \\ | / \n" ~
-	"|    |\n" ~
-	"|    |\n" ~
-	"|   / \\\n" ~
-	"|  /   \\\n" ~
-	"|\n" ~
-	"|\n",
-
-
-	"|- - |\n" ~
-	"|   #|#\n" ~
-	"| # / \\ #\n" ~
-	"| \\#\\ /#/\n" ~
-	"|  \\###/ \n" ~
-	"|    |\n" ~
-	"|    |\n" ~
-	"|   / \\\n" ~
-	"|  /   \\\n" ~
-	"|\n" ~
-	"|\n"
-];
-
-
-/// Extract the scene rendering.
-void render(ref const string randomWord, int errors, const char[] guessed, const char[] wrong)
-{
-	wait(spawnShell("cls"));
-	writeln(hangedMan[errors]);
-	auto mask = tr(randomWord, guessed, ['_'], "c");
-	write("   ");
-	for (int i = 0; i < mask.length; ++i) {
-		write(mask[i], " ");
-	}
-	writeln("   (", randomWord.length, " letters)\n");
-	writeln("Right guesses: ", guessed);
-	writeln("Wrong guesses: ", wrong,
-	        "  (", hangedMan.length - wrong.length - 1, "/",
-	        hangedMan.length - 1, " left)");
-}
-
-
-/// Extract the user input functionallity.
-char readGuess(ref const char[] guessed, ref const char[] wrong)
-{
-	bool uniqueGuess;
-	char[] guess;
-	char ch;
-
-	do {
-		write("Guess a letter: ");
-		readln(guess);
-
-		assert(guess.length > 0);
-
-		ch = guess[0];
-		uniqueGuess = true; // assume uniqueness
-
-		if (!ch.isAlpha || !ch.isLower) {
-			writeln("Your guess must be a lower-case letter.");
-			continue;
-		}
-
-		// try in guessed
-		for (int i = 0; i < guessed.length; ++i) {
-			if (guessed[i] == ch) {
-				uniqueGuess = false;
-				writeln("You already tried that and it was right.");
-				break;
-			}
-		}
-
-		// try in wrong
-		if (uniqueGuess) {
-			for (int i = 0; i < wrong.length; ++i) {
-				if (wrong[i] == ch) {
-					uniqueGuess = false;
-					writeln("You already tried that and it was wrong.");
-					break;
-				}
-			}
-		}
-	} while (!uniqueGuess || !ch.isLower || !ch.isAlpha);
-
-	return ch;
-}
-
 
 /// Extract the correctness test.
 @safe bool isCorrectGuess(char ch, string randomWord)
@@ -234,7 +58,7 @@ char readGuess(ref const char[] guessed, ref const char[] wrong)
 
 
 /// The whole game in one function.
-bool play(ref const string randomWord)
+bool play(string randomWord)
 {
 	const char[] charsInRandomWord = getCharsInWord(randomWord);
 
