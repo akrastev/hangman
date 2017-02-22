@@ -212,7 +212,7 @@ char readGuess(ref const char[] guessed, ref const char[] wrong)
 
 
 /// Extract the correctness test.
-bool isCorrectGuess(char ch, ref const string randomWord)
+@safe bool isCorrectGuess(char ch, string randomWord)
 {
 	bool found = false;
 	for (int i = 0; i < randomWord.length; ++i) {
@@ -223,6 +223,13 @@ bool isCorrectGuess(char ch, ref const string randomWord)
 	}
 
 	return found;
+}
+
+
+@safe unittest
+{
+	assert(isCorrectGuess('w', "cow"));
+	assert(!isCorrectGuess('n', "how"));
 }
 
 
