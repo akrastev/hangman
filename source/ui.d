@@ -97,7 +97,7 @@ immutable string[] hangedMan = [
 
 
 /// Extract the scene rendering.
-void render(ref const string randomWord, int errors, const char[] guessed, const char[] wrong)
+void render(string randomWord, int errors, string guessed, string wrong)
 {
 	wait(spawnShell("cls"));
 	writeln(hangedMan[errors]);
@@ -115,7 +115,7 @@ void render(ref const string randomWord, int errors, const char[] guessed, const
 
 
 /// Extract the user input functionallity.
-char readGuess(ref const char[] guessed, ref const char[] wrong)
+char readGuess(string guessed, string wrong)
 {
 	bool uniqueGuess;
 	char[] guess;
