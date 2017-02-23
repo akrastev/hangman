@@ -1,18 +1,14 @@
 import db;
 import gl;
-import std.stdio;
+import ui;
 
 /// The game itself.
-version(unittest)
-void main() {}
-else
 void main()
 {
 	immutable string randomWord = getRandomWord();
 	if (play(randomWord)) {
-		writeln("YOU ROCK!");
+		reportSuccess();
 	} else {
-		writeln("YOU WERE HANGED");
-		writeln("The word was: ", randomWord);
+		reportFailure(randomWord);
 	}
 }

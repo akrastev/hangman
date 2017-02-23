@@ -158,3 +158,16 @@ char readGuess(string guessed, string wrong)
 
 	return ch;
 }
+
+/// Celebrates your success.
+void reportSuccess()
+{
+	writeln("YOU ROCK!");
+}
+
+/// Reports what failed you.
+void reportFailure(string word)
+{
+	writeln("YOU WERE HANGED");
+	writeln("The word was: ", word);
+}
