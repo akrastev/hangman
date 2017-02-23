@@ -1,4 +1,3 @@
-import db;
 import std.algorithm.iteration;
 import std.algorithm.sorting;
 import std.random;

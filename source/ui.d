@@ -95,7 +95,9 @@ immutable string[] hangedMan = [
 	"|\n"
 ];
 
-
+version(unittest)
+void render(string, int, string, string) {}
+else
 /// Extract the scene rendering.
 void render(string randomWord, int errors, string guessed, string wrong)
 {
@@ -159,12 +161,18 @@ char readGuess(string guessed, string wrong)
 	return ch;
 }
 
+version(unittest)
+void reportSuccess() {}
+else
 /// Celebrates your success.
 void reportSuccess()
 {
 	writeln("YOU ROCK!");
 }
 
+version(unittest)
+void reportFailure(string) {}
+else
 /// Reports what failed you.
 void reportFailure(string word)
 {

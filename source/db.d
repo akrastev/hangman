@@ -2,6 +2,12 @@ import vibe.d;
 import vibe.http.client;
 
 
+version(unittest)
+string getRandomWord()
+{
+	return "hownowbrowncow";
+}
+else
 /// Extract getting the random word.
 string getRandomWord()
 {
