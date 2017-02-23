@@ -102,4 +102,5 @@ bool play(string randomWord)
 {
 	// This is wrong based on the test implementation of readGuess.
 	assert(play("how"));
+	assert(!play("spatula"));
 }
