@@ -3,7 +3,7 @@ import vibe.http.client;
 
 
 version(unittest)
-string getRandomWord()
+@safe string getRandomWord()
 {
 	return "hownowbrowncow";
 }
@@ -23,4 +23,12 @@ string getRandomWord()
 	);
 	
 	return randomWord.toLower;
+}
+
+/// In the unit test version a fixed string is returned.
+///
+/// We might need other strings as well to test corner cases.
+@safe unittest
+{
+	assert("hownowbrowncow" == getRandomWord());
 }
