@@ -97,3 +97,9 @@ bool play(string randomWord)
 
 	return isWinning;
 }
+
+@system unittest
+{
+	// This is wrong based on the test implementation of readGuess.
+	assert(play("how"));
+}

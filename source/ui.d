@@ -116,6 +116,12 @@ void render(string randomWord, int errors, string guessed, string wrong)
 }
 
 
+version(unittest)
+char readGuess(string, string)
+{
+	return 'o';
+}
+else
 /// Extract the user input functionallity.
 char readGuess(string guessed, string wrong)
 {
