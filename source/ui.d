@@ -1,4 +1,6 @@
+import core.stdc.stdlib;
 import std.ascii;
+import std.conv;
 import std.process;
 import std.stdio;
 import std.string;
@@ -130,10 +132,15 @@ char readGuess(string guessed, string wrong)
 	char ch;
 
 	do {
-		write("Guess a letter: ");
-		readln(guess);
+		write("Guess a letter or enter 'quit' to quit: ");
+		readln(guess); // Reads the newline characters as well.
 
-		assert(guess.length > 0);
+		assert(guess.length > 1);
+
+		if ("quit" == guess.chomp) {
+			// Fixes #6: Add the ability to quit mid-game.
+			exit(0);
+		}
 
 		ch = guess[0];
 		uniqueGuess = true; // assume uniqueness
