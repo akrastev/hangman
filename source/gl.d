@@ -37,9 +37,10 @@ struct GameState {
 @safe unittest
 {
 	GameState s = { _randomWord: "how", _guessedRight: "o", _guessedWrong: "a" };
+	assert(updateGameState('w', s));
 	assert(!updateGameState('c', s));
 	assert("how" == s._randomWord);
-	assert("o" == s._guessedRight);
+	assert("ow" == s._guessedRight);
 	assert("ac" == s._guessedWrong);
 }
 
