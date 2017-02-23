@@ -1,0 +1,12 @@
+The Hangman Changelog
+
+0.2.0
+    - Added integration with Travis CI.
+    - Added unit tests and coverage reporting.
+    - Improved the UI by rendering wrong guesses
+      and final success and addig the 'quit'-ting.
+    - Split the game into layers and mocked the
+      DB and UI layers to test the Game Logic.
+
+0.1.0
+    Initial release.
